@@ -49,6 +49,9 @@ class Game
     #[ORM\ManyToMany(targetEntity: Developer::class, mappedBy: 'gameDeveloper')]
     private Collection $developers;
 
+    #[ORM\Column]
+    private ?int $metacritics = null;
+
     public function __construct()
     {
         $this->gameUsers = new ArrayCollection();
@@ -285,6 +288,18 @@ class Game
         if ($this->developers->removeElement($developer)) {
             $developer->removeGameDeveloper($this);
         }
+
+        return $this;
+    }
+
+    public function getMetacritics(): ?int
+    {
+        return $this->metacritics;
+    }
+
+    public function setMetacritics(int $metacritics): static
+    {
+        $this->metacritics = $metacritics;
 
         return $this;
     }
