@@ -28,8 +28,7 @@ class Game
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $website = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $screenshots = null;
+
 
     #[ORM\OneToMany(mappedBy: 'game', targetEntity: GameUser::class)]
     private Collection $gameUsers;
@@ -51,6 +50,12 @@ class Game
 
     #[ORM\Column]
     private ?int $metacritics = null;
+
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $screenshots = [];
+
+    #[ORM\Column(length: 255)]
+    private ?string $backgroundImage = null;
 
     public function __construct()
     {
@@ -115,17 +120,7 @@ class Game
         return $this;
     }
 
-    public function getScreenshots(): ?string
-    {
-        return $this->screenshots;
-    }
 
-    public function setScreenshots(?string $screenshots): static
-    {
-        $this->screenshots = $screenshots;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, GameUser>
@@ -300,6 +295,30 @@ class Game
     public function setMetacritics(int $metacritics): static
     {
         $this->metacritics = $metacritics;
+
+        return $this;
+    }
+
+    public function getScreenshots(): array
+    {
+        return $this->screenshots;
+    }
+
+    public function setScreenshots(array $screenshots): static
+    {
+        $this->screenshots = $screenshots;
+
+        return $this;
+    }
+
+    public function getBackgroundImage(): ?string
+    {
+        return $this->backgroundImage;
+    }
+
+    public function setBackgroundImage(string $backgroundImage): static
+    {
+        $this->backgroundImage = $backgroundImage;
 
         return $this;
     }
