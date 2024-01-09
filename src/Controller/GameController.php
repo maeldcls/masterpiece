@@ -45,9 +45,9 @@ $apiKey = "85c1e762dda2428786a58b352a42ade2";
 $gameSlug = "the-witcher-3-wild-hunt"; // Remplacez par le slug du jeu que vous souhaitez rechercher
 
 $limit = 100; // Nombre de jeux à récupérer
-$keyword="zelda";
+$keyword="mario";
 
-$apiUrl = "https://api.rawg.io/api/games?key=$apiKey&search=$keyword&page_size=$limit";
+$apiUrl = "https://api.rawg.io/api/games?key=$apiKey&search=$keyword&ordering=-metacritic&page_size=$limit";
 
 
 // Initialisation de cURL
