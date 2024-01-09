@@ -6,33 +6,22 @@ use App\Entity\Developer;
 use App\Entity\Game;
 use App\Entity\Genre;
 use App\Entity\Platform;
-use App\Entity\Publisher;
-use App\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GameController extends AbstractController
+class GenreController extends AbstractController
 {
-    #[Route('/', name: 'app_game')]
-    public function index(): Response
+    #[Route('/genre/{genre}', name: 'app_genre')]
+    public function index($genre): Response
     {
         $game = new Game();
-        $tag = new Tag();
-        $genre = new Genre();
+        $genre = strtolower($genre);
 
-        $developer = new Developer();
-
-
-        // Remplacez "YOUR_API_KEY" par votre clé API RAWG.io
         $apiKey = "85c1e762dda2428786a58b352a42ade2";
-        $gameSlug = "the-witcher-3-wild-hunt"; // Remplacez par le slug du jeu que vous souhaitez rechercher
+        $limit = 25; // Nombre de jeux à récupérer
 
-        $limit = 100; // Nombre de jeux à récupérer
-        $keyword = "skyrim";
-
-        $apiUrl = "https://api.rawg.io/api/games?key=$apiKey&genres=action&ordering=-metacritic&page_size=$limit";
-
+        $apiUrl = "https://api.rawg.io/api/games?key=$apiKey&genres=$genre&ordering=-metacritic&page_size=$limit";
 
         // Initialisation de cURL
         $ch = curl_init($apiUrl);
@@ -57,10 +46,10 @@ class GameController extends AbstractController
         // Traitement de la réponse
         $data = json_decode($response, true);
 
-
+        $genre = new Genre();
         $results = $data['results'];
         $games = [];
-
+        print_r($results);
         foreach ($results as $data) {
             $game = new Game();
 
@@ -84,22 +73,22 @@ class GameController extends AbstractController
                 $game->setScreenshots($screenshots);
                 unset($screenshots);
 
-                if (isset($data['publishers'])) {
-                    foreach ($data['publishers'] as $publisher) {
-                        $publi = new Publisher();
-                        $publi->setName($publisher['name']);
-                        $game->addPublisher($publi);
-                    }
-                }
+                // if (isset($data['publishers'])) {
+                //     foreach ($data['publishers'] as $publisher) {
+                //         $publi = new Publisher();
+                //         $publi->setName($publisher['name']);
+                //         $game->addPublisher($publi);
+                //     }
+                // }
 
-                // Developers
-                if (isset($data['developers'])) {
-                    foreach ($data['developers'] as $developer) {
-                        $dev = new Developer();
-                        $dev->setName($developer['name']);
-                        $game->addDeveloper($dev);
-                    }
-                }
+                // // Developers
+                // if (isset($data['developers'])) {
+                //     foreach ($data['developers'] as $developer) {
+                //         $dev = new Developer();
+                //         $dev->setName($developer['name']);
+                //         $game->addDeveloper($dev);
+                //     }
+                // }
 
                 // Genres
                 if (isset($data['genres'])) {
@@ -126,7 +115,7 @@ class GameController extends AbstractController
             }
         }
 
-        return $this->render('game/index.html.twig', [
+        return $this->render('genre/index.html.twig', [
             'controller_name' => 'GameController',
             'games' => $games
         ]);
