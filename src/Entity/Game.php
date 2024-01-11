@@ -60,6 +60,9 @@ class Game
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $parentPlatform = null;
 
+    #[ORM\Column]
+    private ?int $gameId = null;
+
 
     public function __construct()
     {
@@ -335,6 +338,18 @@ class Game
     public function setParentPlatform(?array $parentPlatform): static
     {
         $this->parentPlatform = $parentPlatform;
+
+        return $this;
+    }
+
+    public function getGameId(): ?int
+    {
+        return $this->gameId;
+    }
+
+    public function setGameId(int $gameId): static
+    {
+        $this->gameId = $gameId;
 
         return $this;
     }

@@ -18,7 +18,7 @@
 			
 			<div class="cardContent">
 				<div class="titleContainer">
-					<h2>{{game.title}}</h2>
+					<a href="{{ path('app_game_details', {'id': game.gameId}) }}"><h2>{{game.title}}</h2></a>
                     {% if game.metacritics %}
                         <div class="metacritics">
                             {{game.metacritics}}
@@ -27,9 +27,12 @@
 				</div>
 				<div>
 					<p>Plateforms :</p>
-					{% for platform in game.parentPlaform %}
-						{% set platformName = platform.name|lower|replace({'/': '-', ' ': '-'}) %}
-						<a href="{{ path('app_platform', {'platform': platformName}) }}"><img src="{{ platform}}.svg" alt="platform"/>{{game.parentPlaform}}</a>
+					{% for parentPlatform in game.parentPlatform %}
+						<a  href="{{ path('app_platform', {'platform': parentPlatform}) }}">
+							<div class="platform">
+								<img src="{{ asset('assets/image/' ~ parentPlatform ~ '.svg') }}" alt="platform"/>
+							</div>
+						</a>
 					{% endfor %}
 				</div>
 				{# <div>

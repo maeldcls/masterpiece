@@ -63,7 +63,6 @@ class GameController extends AbstractController
 
         foreach ($results as $data) {
             $game = new Game();
-            
             if (isset($data['background_image']) && !empty($data['background_image'])) {
                 // Publishers
                 $game->setTitle($data['name']);
@@ -122,12 +121,22 @@ class GameController extends AbstractController
                     }
                 }
                 if (isset($data['parent_platforms'])) {
-                    foreach ($data['parent_platforms'] as $parentPlatformData) {   
-                        $parentPlaforms [] = $parentPlatformData['platform']['slug'];
+                    $parentPlatforms = [];
+                    $uniquePlatforms = [];
+                
+                    foreach ($data['parent_platforms'] as $parentPlatformData) {
+                        $platformSlug = $parentPlatformData['platform']['slug'];
+                
+                        if (!in_array($platformSlug, $uniquePlatforms)) {
+                            $parentPlatforms[] = $platformSlug;
+                            $uniquePlatforms[] = $platformSlug; // Ajouter la plateforme au tableau des éléments uniques
+                        }
                     }
-                    $game->setParentPlatform($parentPlaforms);
+                    $game->setParentPlatform($parentPlatforms);
                 }
-
+                if (isset($data['id'])) {
+                    $game->setGameId($data['id']);
+                }
                 array_push($games, $game);
             }
         }
