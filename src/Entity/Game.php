@@ -57,6 +57,10 @@ class Game
     #[ORM\Column(length: 255)]
     private ?string $backgroundImage = null;
 
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private ?array $parentPlatform = null;
+
+
     public function __construct()
     {
         $this->gameUsers = new ArrayCollection();
@@ -322,4 +326,18 @@ class Game
 
         return $this;
     }
+
+    public function getParentPlatform(): ?array
+    {
+        return $this->parentPlatform;
+    }
+
+    public function setParentPlatform(?array $parentPlatform): static
+    {
+        $this->parentPlatform = $parentPlatform;
+
+        return $this;
+    }
+
+
 }

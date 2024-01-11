@@ -28,7 +28,7 @@ class GameController extends AbstractController
         $apiKey = "85c1e762dda2428786a58b352a42ade2";
         $gameSlug = "the-witcher-3-wild-hunt"; // Remplacez par le slug du jeu que vous souhaitez rechercher
 
-        $limit = 100; // Nombre de jeux à récupérer
+        $limit = 24; // Nombre de jeux à récupérer
         $keyword = "skyrim";
 
         $apiUrl = "https://api.rawg.io/api/games?key=$apiKey&genres=action&ordering=-metacritic&page_size=$limit";
@@ -63,7 +63,7 @@ class GameController extends AbstractController
 
         foreach ($results as $data) {
             $game = new Game();
-
+            
             if (isset($data['background_image']) && !empty($data['background_image'])) {
                 // Publishers
                 $game->setTitle($data['name']);
@@ -120,6 +120,12 @@ class GameController extends AbstractController
                         }
                         $game->addPlatform($platform);
                     }
+                }
+                if (isset($data['parent_platforms'])) {
+                    foreach ($data['parent_platforms'] as $parentPlatformData) {   
+                        $parentPlaforms [] = $parentPlatformData['platform']['slug'];
+                    }
+                    $game->setParentPlatform($parentPlaforms);
                 }
 
                 array_push($games, $game);

@@ -101,3 +101,7 @@ h4{
     color:grey;
   
 }
+.navBar a h4:hover{
+    font-weight: bold;
+    color:gray;
+}
