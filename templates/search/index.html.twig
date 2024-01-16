@@ -1,20 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SearchController!{% endblock %}
+{% block title %}Search{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="test">
+	<div class="header">
+    <h4>resluts for the query {{searchedGame}} : Found {{count}} games</h4>
+    
+    </div>
+    <div class="cardContainer">
+    {% for game in games %}
+		<div class="gameCard">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/web/masterpiece/src/Controller/SearchController.php'|file_link(0) }}">src/Controller/SearchController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/web/masterpiece/templates/search/index.html.twig'|file_link(0) }}">templates/search/index.html.twig</a></code></li>
-    </ul>
+				<div class="screenshots" data-game-screenshots="{{ game.screenshots | json_encode | raw }}">
+                    <!-- Image initiale -->
+                    <img class="screenshot" src="{{ game.screenshots[0] }}" alt="Screenshot">
+                </div>
+			
+			<div class="cardContent">
+				<div class="titleContainer">
+					<h2>{{game.title}}</h2>
+                    {% if game.metacritics %}
+                        <div class="metacritics">
+                            <p>{{game.metacritics}}</p>
+                        </div>
+                    {% endif %}
+				</div>
+				{# <div>
+					<p>Plateforms :</p>
+					{% for platform in game.platforms %}
+						<p>{{platform.name}}</p>
+					{% endfor %}
+				</div> #}
+				{# <div>
+					<p>Developer :</p>
+					{% for developer in game.developers %}
+						<p>{{developer.name}}</p>
+					{% endfor %}
+				</div>
+				<div>
+					<p>Publisher :</p>
+					{% for publisher in game.publishers %}
+						<p>{{publisher.name}}</p>
+					{% endfor %}
+				</div> #}
+				<div>
+					<p>Genres :</p>
+					{% for genre in game.genres %}
+						<p>{{genre.name}}</p>
+					{% endfor %}
+				</div>
+			</div>
+			
+		</div>
+		
+        {% endfor %}
+	
+    
+		
+	</div>
 </div>
 {% endblock %}

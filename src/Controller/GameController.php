@@ -8,15 +8,27 @@ use App\Entity\Genre;
 use App\Entity\Platform;
 use App\Entity\Publisher;
 use App\Entity\Tag;
+use App\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GameController extends AbstractController
 {
     #[Route('/', name: 'app_game')]
-    public function index(): Response
+    public function index(HttpFoundationRequest $request): Response
     {
+        $form = $this->createForm(SearchType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $searchWord = $form->get('searchText')->getData();
+            $searchWordUpdated = strtr($searchWord, ' ', '-');
+            
+            return $this->redirectToRoute('app_search',['searchWord' => $searchWordUpdated]);
+        }
+
         $game = new Game();
         $tag = new Tag();
         $genre = new Genre();
@@ -143,7 +155,8 @@ class GameController extends AbstractController
 
         return $this->render('game/index.html.twig', [
             'controller_name' => 'GameController',
-            'games' => $games
+            'games' => $games,
+            'formSearch'=>$form->createView(),
         ]);
     }
 }

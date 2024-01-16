@@ -5,6 +5,11 @@
 
 {% block body %}
 <div class="test">
+<div>
+{{ form_start(formSearch)}}
+	{{ form_widget(formSearch.searchText)}}
+{{ form_end(formSearch)}}
+</div>
 	<div class="header">
     </div>
     <div class="cardContainer">
@@ -30,7 +35,7 @@
 					{% for parentPlatform in game.parentPlatform %}
 						<a  href="{{ path('app_platform', {'platform': parentPlatform}) }}">
 							<div class="platform">
-								<img src="{{ asset('assets/image/' ~ parentPlatform ~ '.svg') }}" alt="platform"/>
+								<img src="{{ asset('assets/image/' ~ parentPlatform ~ '.svg') }}" alt="{{ parentPlatform }}"/>
 							</div>
 						</a>
 					{% endfor %}
