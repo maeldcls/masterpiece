@@ -26,7 +26,7 @@ class TestController extends AbstractController
 
          // Ignorer la vérification SSL (À utiliser avec précaution !)
          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
- 
+
          // Exécution de la requête
          $response = curl_exec($ch);
  
