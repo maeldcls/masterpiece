@@ -4,69 +4,68 @@
 {% endblock %}
 
 {% block body %}
-<div class="test">
-<div>
-{{ form_start(formSearch)}}
-	{{ form_widget(formSearch.searchText)}}
-{{ form_end(formSearch)}}
-</div>
-	<div class="header">
-    </div>
-    <div class="cardContainer">
-    {% for game in games %}
-		<div class="gameCard">
-
-				<div class="screenshots" data-game-screenshots="{{ game.screenshots | json_encode | raw }}">
-                    <!-- Image initiale -->
-                    <img class="screenshot" src="{{ game.screenshots[0] }}" alt="Screenshot">
-                </div>
-			
-			<div class="cardContent">
-				<div class="titleContainer">
-					<a href="{{ path('app_game_details', {'id': game.gameId}) }}"><h2>{{game.title}}</h2></a>
-                    {% if game.metacritics %}
-                        <div class="metacritics">
-                            {{game.metacritics}}
-                        </div>
-                    {% endif %}
-				</div>
-				<div>
-					<p>Plateforms :</p>
-					{% for parentPlatform in game.parentPlatform %}
-						<a  href="{{ path('app_platform', {'platform': parentPlatform}) }}">
-							<div class="platform">
-								<img src="{{ asset('assets/image/' ~ parentPlatform ~ '.svg') }}" alt="{{ parentPlatform }}"/>
-							</div>
-						</a>
-					{% endfor %}
-				</div>
-				{# <div>
-					<p>Developer :</p>
-					{% for developer in game.developers %}
-						<p>{{developer.name}}</p>
-					{% endfor %}
-				</div>
-				<div>
-					<p>Publisher :</p>
-					{% for publisher in game.publishers %}
-						<p>{{publisher.name}}</p>
-					{% endfor %}
-				</div> #}
-				<div>
-					<p>Genres :</p>
-					{% for genre in game.genres %}
-						<a class="genreLink" href="{{ path('app_genre', {'genre': genre.name}) }}">{{genre.name}}</a>
-					{% endfor %}
-				</div>
-			</div>
-			
+	<div class="test">
+		<div>
+			{{ form_start(formSearch)}}
+			{{ form_widget(formSearch.searchText)}}
+			{{ form_end(formSearch)}}
 		</div>
-		
-        {% endfor %}
-	
-    
-		
+		<div class="header"></div>
+		<div class="cardContainer">
+			{% for game in games %}
+				<div class="gameCard">
+					
+					<div class="screenshots" data-game-screenshots="{{ game.screenshots|json_encode }}">
+						<img class="screenshot-image" src="{{ game.screenshots[0] }}" alt="Screenshot">
+					</div>
+
+					<div class="cardContent">
+						<div class="titleContainer">
+							<a href="{{ path('app_game_details', {'id': game.gameId}) }}">
+								<h2>{{game.title}}</h2>
+							</a>
+							{% if game.metacritics %}
+								<div class="metacritics">
+									{{game.metacritics}}
+								</div>
+							{% endif %}
+						</div>
+						<div>
+							<p>Plateforms :</p>
+							{% for parentPlatform in game.parentPlatform %}
+								<a href="{{ path('app_platform', {'platform': parentPlatform}) }}">
+									<div class="platform">
+										<img src="{{ asset('assets/image/' ~ parentPlatform ~ '.svg') }}" alt="{{ parentPlatform }}"/>
+									</div>
+								</a>
+							{% endfor %}
+						</div>
+						{# <div>
+											<p>Developer :</p>
+											{% for developer in game.developers %}
+												<p>{{developer.name}}</p>
+											{% endfor %}
+										</div>
+										<div>
+											<p>Publisher :</p>
+											{% for publisher in game.publishers %}
+												<p>{{publisher.name}}</p>
+											{% endfor %}
+										</div> #}
+						<div>
+							<p>Genres :</p>
+							{% for genre in game.genres %}
+								<a class="genreLink" href="{{ path('app_genre', {'genre': genre.name}) }}">{{genre.name}}</a>
+							{% endfor %}
+						</div>
+					</div>
+
+				</div>
+
+			{% endfor %}
+
+
+		</div>
 	</div>
-</div>
 
 {% endblock %}

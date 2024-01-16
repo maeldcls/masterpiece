@@ -51,8 +51,7 @@ class Game
     #[ORM\Column]
     private ?int $metacritics = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $screenshots = [];
+
 
     #[ORM\Column(length: 255)]
     private ?string $backgroundImage = null;
@@ -62,6 +61,9 @@ class Game
 
     #[ORM\Column]
     private ?int $gameId = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?array $screenshots = null;
 
 
     public function __construct()
@@ -306,18 +308,6 @@ class Game
         return $this;
     }
 
-    public function getScreenshots(): array
-    {
-        return $this->screenshots;
-    }
-
-    public function setScreenshots(array $screenshots): static
-    {
-        $this->screenshots = $screenshots;
-
-        return $this;
-    }
-
     public function getBackgroundImage(): ?string
     {
         return $this->backgroundImage;
@@ -350,6 +340,18 @@ class Game
     public function setGameId(int $gameId): static
     {
         $this->gameId = $gameId;
+
+        return $this;
+    }
+
+    public function getScreenshots(): ?array
+    {
+        return $this->screenshots;
+    }
+
+    public function setScreenshots(?array $screenshots): static
+    {
+        $this->screenshots = $screenshots;
 
         return $this;
     }

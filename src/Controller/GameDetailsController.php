@@ -13,14 +13,13 @@ class GameDetailsController extends AbstractController
     {
         $apiKey = "85c1e762dda2428786a58b352a42ade2";
         $apiUrl = "https://api.rawg.io/api/games/$id?key=$apiKey";
+
         $ch = curl_init($apiUrl);
         $response = curl_exec($ch);
          // Configuration des options cURL
          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
          // Ignorer la vérification SSL (À utiliser avec précaution !)
          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
- 
          // Exécution de la requête
          $response = curl_exec($ch);
  
@@ -33,11 +32,8 @@ class GameDetailsController extends AbstractController
          curl_close($ch);
         $data = json_decode($response, true);
         var_dump($data);
-        // $results = $data['results'];
-        // var_dump($results);
-        // foreach ($results as $data) {
-            
-        // }
+       
+
         return $this->render('game_details/index.html.twig', [
             'controller_name' => 'GameDetailsController',
         ]);

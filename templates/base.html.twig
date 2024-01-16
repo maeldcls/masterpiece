@@ -37,9 +37,8 @@
     </div>
     {% block body %}{% endblock %}
     {% block javascripts %}
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
-        
-        {% endblock %}
-        <script src="{{ asset ('assets/js/main.js') }}"></script>
+        {% block importmap %}{{ importmap('app') }}{% endblock %}    
+    {% endblock %}
+        <script src="{{ asset ('js/main.js') }}"></script>
 </body>
 </html>

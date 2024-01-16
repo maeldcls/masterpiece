@@ -11,10 +11,9 @@
     {% for game in games %}
 		<div class="gameCard">
 
-				<div class="screenshots" data-game-screenshots="{{ game.screenshots | json_encode | raw }}">
-                    <!-- Image initiale -->
-                    <img class="screenshot" src="{{ game.screenshots[0] }}" alt="Screenshot">
-                </div>
+				<div class="screenshots" data-game-screenshots="{{ game.screenshots|json_encode }}">
+					<img class="screenshot-image" src="{{ game.screenshots[0] }}" alt="Screenshot">
+				</div>
 			
 			<div class="cardContent">
 				<div class="titleContainer">

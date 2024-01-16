@@ -1,49 +1,52 @@
 <?php
-
-namespace App\Controller;
+namespace App\Service;
 
 use App\Entity\Developer;
 use App\Entity\Game;
 use App\Entity\Genre;
 use App\Entity\Platform;
 use App\Entity\Publisher;
-use App\Form\SearchType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class SearchController extends AbstractController
+class ApiDataService
 {
-    #[Route('/search/{searchWord}', name: 'app_search')]
-    public function index($searchWord): Response
+    private $client;
+
+    public function __construct(HttpClientInterface $client)
     {
-        $genre = new Genre();
+        $this->client = $client;
+    }
 
-        $developer = new Developer();
-        $searchWordUpdated = strtr($searchWord, '-', ' ');
+    public function fetchDataFromApi($url)
+    {
+        // Logique pour effectuer la requête API et récupérer les données
+        // $response = $this->client->request('GET', $url);
+        // $data = $response->toArray();
 
-        $apiKey = "85c1e762dda2428786a58b352a42ade2";
-
-        $apiUrl = "https://api.rawg.io/api/games?key=$apiKey&search=$searchWord&ordering=-metacritic";
-
-
+        
         // Initialisation de cURL
-        $ch = curl_init($apiUrl);
+        $ch = curl_init($url);
+
         // Configuration des options cURL
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
         // Ignorer la vérification SSL (À utiliser avec précaution !)
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
         // Exécution de la requête
         $response = curl_exec($ch);
+
         // Vérification des erreurs cURL
         if (curl_errno($ch)) {
             die('Erreur cURL : ' . curl_error($ch));
         }
+
         // Fermeture de la session cURL
         curl_close($ch);
 
         // Traitement de la réponse
         $data = json_decode($response, true);
+
 
         $results = $data['results'];
         $games = [];
@@ -67,9 +70,10 @@ class SearchController extends AbstractController
                 }
 
                 $game->setBackgroundImage($data['background_image']);
+                // $jsonScreenshots = json_encode($screenshots);
                 $game->setScreenshots($screenshots);
                 unset($screenshots);
-
+ 
                 if (isset($data['publishers'])) {
                     foreach ($data['publishers'] as $publisher) {
                         $publi = new Publisher();
@@ -121,20 +125,15 @@ class SearchController extends AbstractController
                     }
                     $game->setParentPlatform($parentPlatforms);
                 }
-
                 if (isset($data['id'])) {
                     $game->setGameId($data['id']);
                 }
-
                 array_push($games, $game);
+                
+                
             }
         }
-        $count = count($games);
-        return $this->render('search/index.html.twig', [
-            'controller_name' => 'SearchController',
-            'games' => $games,
-            'searchedGame'=>$searchWordUpdated,
-            'count'=>$count
-        ]);
+        
+        return $games;
     }
 }
