@@ -1,7 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello GameDetailsController!{% endblock %}
+{% block title %}Hello GameDetailsController!
+{% endblock %}
 
+{% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/GameDetail.css') }}">
+        {% endblock %}
 {% block body %}
+    <div class="content">
+        
+      
+        <h2 class="title">{{ game.title }}</h2>
+
+        <div class="screenContainer">
+        
+            {% for screenshot in game.screenshots %}
+            <div>
+                <img src="{{ screenshot }}" alt="screen"/>
+            </div>
+            {% endfor%}
+            <p>text test blablabla</p>
+        </div>
+    </div>
+    <style>
+        .content{
+            background-image: url({{ game.backgroundImage }});
+        }
+    </style>
 
 {% endblock %}

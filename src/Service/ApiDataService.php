@@ -73,7 +73,7 @@ class ApiDataService
                 // $jsonScreenshots = json_encode($screenshots);
                 $game->setScreenshots($screenshots);
                 unset($screenshots);
- 
+
                 if (isset($data['publishers'])) {
                     foreach ($data['publishers'] as $publisher) {
                         $publi = new Publisher();
