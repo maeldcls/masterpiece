@@ -18,7 +18,9 @@
 			
 			<div class="cardContent">
 				<div class="titleContainer">
-					<h2>{{game.title}}</h2>
+					<a href="{{ path('app_game_details', {'id': game.gameId}) }}">
+								<h2>{{game.title}}</h2>
+							</a>
                     {% if game.metacritics %}
                         <div class="metacritics">
                             <p>{{game.metacritics}}</p>
