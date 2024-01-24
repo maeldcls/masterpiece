@@ -5,16 +5,14 @@
 
 {% block body %}
 	<div class="test">
-		<div>
-			{{ form_start(formSearch)}}
+		{{ form_start(formSearch)}}
 			{{ form_widget(formSearch.searchText)}}
-			{{ form_end(formSearch)}}
-		</div>
+			{{ form_end(formSearch)}} 
 		<div class="header"></div>
 		<div class="cardContainer">
 			{% for game in games %}
 				<div class="gameCard">
-					
+
 					<div class="screenshots" data-game-screenshots="{{ game.screenshots|json_encode }}">
 						<img class="screenshot-image" src="{{ game.screenshots[0] }}" alt="Screenshot">
 					</div>
@@ -33,25 +31,11 @@
 						<div>
 							<p>Plateforms :</p>
 							{% for parentPlatform in game.parentPlatform %}
-								<a href="{{ path('app_platform', {'platform': parentPlatform}) }}">
-									<div class="platform">
-										<img src="{{ asset('assets/image/' ~ parentPlatform ~ '.svg') }}" alt="{{ parentPlatform }}"/>
-									</div>
-								</a>
+								<div class="platform">
+									<img src="{{ asset('assets/image/' ~ parentPlatform ~ '.svg') }}" alt="{{ parentPlatform }}"/>
+								</div>
 							{% endfor %}
 						</div>
-						{# <div>
-											<p>Developer :</p>
-											{% for developer in game.developers %}
-												<p>{{developer.name}}</p>
-											{% endfor %}
-										</div>
-										<div>
-											<p>Publisher :</p>
-											{% for publisher in game.publishers %}
-												<p>{{publisher.name}}</p>
-											{% endfor %}
-										</div> #}
 						<div>
 							<p>Genres :</p>
 							{% for genre in game.genres %}

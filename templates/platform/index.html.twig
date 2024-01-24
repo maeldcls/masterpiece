@@ -4,59 +4,51 @@
 {% endblock %}
 
 {% block body %}
-<div class="test">
-	<div class="header">
-    </div>
-    <div class="cardContainer">
-    {% for game in games %}
-		<div class="gameCard">
+	<div class="test">
+		<div class="header"></div>
+		<div class="cardContainer">
+			{% for game in games %}
+				<div class="gameCard">
 
-				<div class="screenshots" data-game-screenshots="{{ game.screenshots|json_encode }}">
-					<img class="screenshot-image" src="{{ game.screenshots[0] }}" alt="Screenshot">
+					<div class="screenshots" data-game-screenshots="{{ game.screenshots|json_encode }}">
+						<img class="screenshot-image" src="{{ game.screenshots[0] }}" alt="Screenshot">
+					</div>
+
+					<div class="cardContent">
+						<div class="titleContainer">
+							<h2>{{game.title}}</h2>
+							{% if game.metacritics %}
+								<div class="metacritics">
+									<p>{{game.metacritics}}</p>
+								</div>
+							{% endif %}
+						</div>
+						<div>
+							<p>Plateforms :</p>
+							{% for parentPlatform in game.parentPlatform %}
+								<div class="platform">
+									<img src="{{ asset('assets/image/' ~ parentPlatform ~ '.svg') }}" alt="{{ parentPlatform }}"/>
+								</div>
+
+							{% endfor %}
+						</div>
+
+						<div>
+							<p>Genres :
+							</p>
+							{% for genre in game.genres %}
+								<p>{{genre.name}}
+								</p>
+							{% endfor %}
+						</div>
+					</div>
+
 				</div>
-			
-			<div class="cardContent">
-				<div class="titleContainer">
-					<h2>{{game.title}}</h2>
-                    {% if game.metacritics %}
-                        <div class="metacritics">
-                            <p>{{game.metacritics}}</p>
-                        </div>
-                    {% endif %}
-				</div>
-				{# <div>
-					<p>Plateforms :</p>
-					{% for platform in game.platforms %}
-						<p>{{platform.name}}</p>
-					{% endfor %}
-				</div> #}
-				{# <div>
-					<p>Developer :</p>
-					{% for developer in game.developers %}
-						<p>{{developer.name}}</p>
-					{% endfor %}
-				</div>
-				<div>
-					<p>Publisher :</p>
-					{% for publisher in game.publishers %}
-						<p>{{publisher.name}}</p>
-					{% endfor %}
-				</div> #}
-				<div>
-					<p>Genres :</p>
-					{% for genre in game.genres %}
-						<p>{{genre.name}}</p>
-					{% endfor %}
-				</div>
-			</div>
-			
+
+			{% endfor %}
+
+
 		</div>
-		
-        {% endfor %}
-	
-    
-		
 	</div>
-</div>
 
 {% endblock %}

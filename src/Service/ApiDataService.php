@@ -105,10 +105,12 @@ class ApiDataService
                     foreach ($data['platforms'] as $platformData) {
                         $platform = new Platform();
                         $platform->setName($platformData['platform']['name']);
+                        $platform->setApiId($platformData['platform']['id']);
                         if (isset($data['platforms']['image_background'])) {
                             $platform->setImage($platformData['platform']['image_background']);
                         }
                         $game->addPlatform($platform);
+                        
                     }
                 }
                 if (isset($data['parent_platforms'])) {
