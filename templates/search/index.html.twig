@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="test">
 		<div class="header">
-			<h4>resluts for the query
+			<h4>results for the query
 				{{searchedGame}}
 				: Found
 				{{count}}
@@ -45,7 +45,7 @@
 						<div>
 							<p>Genres :</p>
 							{% for genre in game.genres %}
-								<p>{{genre.name}}</p>
+								<a class="genreLink" href="{{ path('app_genre', {'genre': genre.name}) }}">{{genre.name}}</a>
 							{% endfor %}
 						</div>
 					</div>
@@ -53,8 +53,7 @@
 				</div>
 
 			{% endfor %}
-
-
-		</div>
 	</div>
+</div>
+				
 {% endblock %}

@@ -22,7 +22,8 @@ a{
 }
 body{
     background-color: #15141A;
-    display:flex
+    display:flex;
+    min-width:100%;
 }
 h3{
     font-weight: bold;
@@ -88,7 +89,7 @@ h4{
 .cardContainer{
     display: flex;
     flex-wrap: wrap;
-
+    justify-content: center;
 }
 .genreLink{
     padding:2px;

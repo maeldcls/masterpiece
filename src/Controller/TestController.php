@@ -21,7 +21,7 @@ class TestController extends AbstractController
         // https://api.rawg.io/api/games?key=$apiKey&platforms=$id&ordering=-metacritic 
         // requete fonctionnel pour trouver des jeux sortis sur une plateforme donné ci dessus, pour cela il faut d'abord avoir l'id de la plateforme
 
-        $apiUrl = "https://api.rawg.io/api/games?key=$apiKey&platforms=$id&ordering=-metacritic";
+        $apiUrl = "https://api.rawg.io/api/games?key=$apiKey&search=$keyword&ordering=-metacritic";
 
 
 
