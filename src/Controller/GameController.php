@@ -30,7 +30,7 @@ class GameController extends AbstractController
 
         $limit = 24; // Nombre de jeux à récupérer
 
-        $apiUrl = "https://api.rawg.io/api/games?key=$apiKey&ordering=-metacritic&page_size=$limit";
+        $apiUrl = "https://api.rawg.io/api/games?key=$apiKey&ordering=-relevance&page_size=$limit";
         $apiData = $apiDataService->fetchDataFromApi($apiUrl);
    
         
