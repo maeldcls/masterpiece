@@ -1,7 +1,7 @@
-var modal = document.querySelector("#modal");
+let modal = document.querySelector("#modal");
 
 // Get the modal image tag
-var modalImg = document.querySelector("#modal-img");
+let modalImg = document.querySelector("#modal-img");
 
 // this function is called when a small image is clicked
 function showModal(src) {

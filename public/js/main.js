@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function startInterval() {
-            intervalId = setInterval(changeImage, 1000);
+            intervalId = setInterval(changeImage, 1500);
         }
 
         function stopInterval() {
@@ -30,29 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
             stopInterval();
             screenshotImage.src = screenshots[0];
         });
-
     });
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     var targetDiv = document.getElementById('screenshotImage');
-    //     var cursorPosition = document.getElementById('cursorPosition');
-
-    //     targetDiv.addEventListener('mousemove', function (event) {
-    //         var x = event.clientX - targetDiv.getBoundingClientRect().left;
-    //         var y = event.clientY - targetDiv.getBoundingClientRect().top;
-
-    //         // Mettez à jour la position du curseur
-    //         cursorPosition.textContent = 'X: ' + x + ', Y: ' + y;
-
-    //         // Votre logique ici en fonction de la position du curseur
-    //         // Par exemple, vous pouvez déclencher un événement ou effectuer une action spécifique
-    //         if (x > 150 && y > 100) {
-    //             // Faites quelque chose lorsque le curseur est dans une certaine position
-    //             console.log('Le curseur est dans une certaine position.');
-    //         }
-    //     });
-    // });
-
-
-    // Au chargement de la page, commencer l'intervalle
 
 });

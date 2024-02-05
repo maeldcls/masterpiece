@@ -1,21 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello GameDetailsController!
-{% endblock %}
+{% block title %}{{ game.title }}{% endblock %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/GameDetail.css') }}">
 {% endblock %}
 {% block body %}
-	<div class="content">
+	<div class="w-full content">
 
 
-		<h2 class="title">{{ game.title }}</h2>
 
-        <div class="w-full screenContainer">
-        
+        <div class="w-full mt-72 screenContainer">
+			<h2 class="title">{{ game.title }}</h2>
             {% for screenshot in game.screenshots %}
-            <div>
+            <div class="screen-div">
                 <img src="{{ screenshot }}" alt="screen" onclick="showModal('{{ screenshot }}')"/>
             </div>
             {% endfor%}
@@ -27,7 +25,8 @@
     </div>
     <style>
         .content{
-            background-image: url({{ game.backgroundImage }});   
+            background-image: url({{ game.backgroundImage }});  
+			background-size:cover;
         }
     </style>
 		
