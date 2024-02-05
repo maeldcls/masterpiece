@@ -7,8 +7,9 @@
         
         
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+           
         {% endblock %}
+         {{ encore_entry_link_tags('app') }}
 
         
     </head>
@@ -51,9 +52,10 @@
     </div>
     {% block body %}{% endblock %}
     {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% block importmap %}{{ importmap('app') }}{% endblock %}    
+            
     {% endblock %}
+    {{ encore_entry_script_tags('app') }}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
     <script src="{{ asset ('js/main.js') }}"></script>
   
 </body>
