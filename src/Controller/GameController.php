@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Developer;
 use App\Entity\Game;
+use App\Entity\GameUser;
 use App\Entity\Genre;
 use App\Entity\Platform;
 use App\Entity\Publisher;
@@ -55,9 +56,9 @@ class GameController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
         $manager =$entityManager->getRepository(Game::class);
-        //$entity = ;
 
-        if(!$manager->findby(['gameId' => $id])){
+        $foundGame = $manager->findby(['gameId' => $id]);
+        if(!$foundGame){
             $apiKey = "85c1e762dda2428786a58b352a42ade2";
 
             $apiUrl = "https://api.rawg.io/api/games/$id?key=$apiKey";
@@ -89,10 +90,28 @@ class GameController extends AbstractController
             $game->setGameId($id);
             $game->setMetacritics($data['metacritic']);
             //$dateActuelle = new DateTimeImmutable();
-             $entityManager->persist($game);
-             $entityManager->flush();
+    
         }
         
+        if($this->getUser()){
+            
+            $entityManager->persist($game);
+            $entityManager->flush();
+            $gameUser = new GameUser();
+            if($foundGame){
+                $gameUser->setGame($foundGame);
+            }else{
+                $gameUser->setGame($game);
+            }
+
+           $gameUser->setUser($this->getUser());
+           $gameUser->setAddedAt(new DateTimeImmutable());
+           $gameUser->setIsFav(false);
+           $gameUser->setStatus("played");
+
+           $entityManager->persist($gameUser);
+           $entityManager->flush();
+        }
          return $this->redirectToRoute('app_game');
         
     }
