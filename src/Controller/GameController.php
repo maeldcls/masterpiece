@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Game;
+use App\Entity\GameUser;
 use App\Service\ApiDataService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\SearchType;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GameController extends AbstractController
@@ -40,5 +43,74 @@ class GameController extends AbstractController
             'formSearch'=>$form->createView(),
    
         ]);
+    }
+    #[Route('/new/{id}', name: 'app_add_game')]
+    public function addGame(Request $request, EntityManagerInterface $entityManager, int $id): Response
+    {
+        if($this->getUser()){
+            $manager =$entityManager->getRepository(Game::class);
+
+            $foundGame = $manager->findby(['gameId' => $id]);
+            $gameUser = new GameUser();
+            $game = new Game();
+            if(!$foundGame){
+                $apiKey = "85c1e762dda2428786a58b352a42ade2";
+
+                $apiUrl = "https://api.rawg.io/api/games/$id?key=$apiKey";
+        
+                $ch = curl_init($apiUrl);
+                $response = curl_exec($ch);
+                // Configuration des options cURL
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                // Ignorer la vérification SSL (À utiliser avec précaution !)
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                // Exécution de la requête
+                $response = curl_exec($ch);
+        
+                // Vérification des erreurs cURL
+                if (curl_errno($ch)) {
+                    die('Erreur cURL : ' . curl_error($ch));
+                }
+        
+                // Fermeture de la session cURL
+                curl_close($ch);
+                $data = json_decode($response, true);
+
+                
+                $game->setTitle($data['name']);
+                $game->setBackgroundImage($data['background_image']);
+                $game->setSummary($data['description_raw']);
+                $game->setReleaseDate(new \DateTimeImmutable($data['released']));
+                $game->setWebsite($data['website']);
+                $game->setGameId($id);
+                $game->setMetacritics($data['metacritic']);
+                //$dateActuelle = new DateTimeImmutable();
+                $entityManager->persist($game);
+                $entityManager->flush();
+
+                $gameUser->setGame($game);
+                $gameId = $game->getid();
+            }else{
+                $gameId= $foundGame[0]->getId();
+                $gameUser->setGame($foundGame[0]);
+            }
+
+            $gameUserManager =$entityManager->getRepository(GameUser::class);
+            $foundGameUser = $gameUserManager->findby(['game' => $gameId, 'user' => $this->getUser()->getId()]);
+            
+            if(!$foundGameUser){
+                $gameUser->setUser($this->getUser());
+                $gameUser->setAddedAt(new DateTimeImmutable());
+                $gameUser->setIsFav(false);
+                $gameUser->setStatus("played");
+     
+                $entityManager->persist($gameUser);
+                $entityManager->flush();
+            }
+
+           
+        }
+        
+         return $this->redirectToRoute('app_game');
     }
 }

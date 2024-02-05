@@ -22,8 +22,6 @@ class Game
     #[ORM\Column(length: 255)]
     private ?string $summary = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $releaseDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $website = null;
@@ -51,8 +49,6 @@ class Game
     #[ORM\Column]
     private ?int $metacritics = null;
 
-
-
     #[ORM\Column(length: 255)]
     private ?string $backgroundImage = null;
 
@@ -64,6 +60,9 @@ class Game
 
     #[ORM\Column(nullable: true)]
     private ?array $screenshots = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $releaseDate = null;
 
 
     public function __construct()
@@ -105,17 +104,7 @@ class Game
         return $this;
     }
 
-    public function getReleaseDate(): ?\DateTimeInterface
-    {
-        return $this->releaseDate;
-    }
-
-    public function setReleaseDate(\DateTimeInterface $releaseDate): static
-    {
-        $this->releaseDate = $releaseDate;
-
-        return $this;
-    }
+  
 
     public function getWebsite(): ?string
     {
@@ -352,6 +341,18 @@ class Game
     public function setScreenshots(?array $screenshots): static
     {
         $this->screenshots = $screenshots;
+
+        return $this;
+    }
+
+    public function getReleaseDate(): ?\DateTimeImmutable
+    {
+        return $this->releaseDate;
+    }
+
+    public function setReleaseDate(?\DateTimeImmutable $releaseDate): static
+    {
+        $this->releaseDate = $releaseDate;
 
         return $this;
     }
