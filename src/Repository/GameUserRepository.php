@@ -45,4 +45,18 @@ class GameUserRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function showMyGames(int $userId)
+    {
+        $queryBuilder = $this->createQueryBuilder('gu');
+
+        $queryBuilder
+            ->select('gu', 'g')
+            ->innerJoin('gu.game', 'g')
+            ->where('gu.user = :userId')
+            ->setParameter('userId', $userId);
+
+        $result = $queryBuilder->getQuery()->getArrayResult();
+
+        return $result;
+    }
 }

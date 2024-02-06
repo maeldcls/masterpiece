@@ -24,7 +24,7 @@
         <a href="{{ path('app_game') }}" class="font-bold p-2"><h4>Accueil</h4></a>
             {% if app.user %}
             <a href="{{ path('app_logout') }} " class="font-bold p-2"><h4>Log Out</h4></a>
-
+            <a href="{{ path('app_my_game_list') }}"><h4>MyGameList</h4></a>
         {% else %}
             <a href="{{ path('app_login') }}" class="font-bold p-2"><h4>Log In</h4></a>
         {% endif %}
