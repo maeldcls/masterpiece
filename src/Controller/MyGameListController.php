@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Game;
+use App\Entity\GameUser;
 use App\Repository\GameUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,17 +16,49 @@ class MyGameListController extends AbstractController
     {
         $games = [];
         $gameUser = [];
+        /** @var \App\Entity\User $user */
         $result = $gameUserRepository->showMyGames($this->getUser()->getId());
 
         dump($result);
-            // foreach ($result as $row) {
-            //     $game = $row[1]->getGame();
-            //     $games[] = $game;
-            // }
+        
 
         return $this->render('my_game_list/index.html.twig', [
             'controller_name' => 'MyGameListController',
             'games' => $result,
         ]);
+    }
+
+    #[Route('/remove/{gameUserId}', name: 'app_remove')]
+    public function deleteGameUserAction(EntityManagerInterface $entityManager, int $gameUserId)
+    {
+        $repository = $entityManager->getRepository(GameUser::class);
+        $gameUser = $repository->find($gameUserId);
+
+        if ($gameUser) {
+            $entityManager->remove($gameUser);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_my_game_list');
+        } else {
+            // si entiy GameUser pas trouvé
+            return $this->redirectToRoute('app_my_game_list');
+        }
+    }
+
+    #[Route('/fav/{gameUserId}', name: 'app_fav')]
+    public function changeFav(EntityManagerInterface $entityManager, int $gameUserId)
+    {
+        $repository = $entityManager->getRepository(GameUser::class);
+        $gameUser = $repository->find($gameUserId);
+
+        if ($gameUser) {
+            $gameUser->toggleIsFav();
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_my_game_list');
+        } else {
+            // si entiy GameUser pas trouvé
+            return $this->redirectToRoute('app_my_game_list');
+        }
     }
 }

@@ -52,10 +52,7 @@
         height: 48px;
     
     }    
-.content{
-    background-size:contain;
-    width: 100%;
-}
+
 .hidden{
     display:none;
 }

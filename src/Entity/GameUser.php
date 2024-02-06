@@ -154,4 +154,9 @@ class GameUser
 
         return $this;
     }
+
+    public function toggleIsFav(): void
+    {
+        $this->isFav = !$this->isFav;
+    }
 }
