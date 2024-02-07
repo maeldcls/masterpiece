@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\GameUser;
 use App\Form\GameUserEditType;
+use App\Form\GameUserType;
 use App\Repository\GameUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,12 +22,12 @@ class MyGameListController extends AbstractController
         $result = $gameUserRepository->showMyGames($this->getUser()->getId());
 
         dump($result);
-        $form = $this->createForm(GameUserEditType::class);
+        $form = $this->createForm(GameUserType::class);
 
         return $this->render('my_game_list/index.html.twig', [
             'controller_name' => 'MyGameListController',
             'games' => $result,
-            'form' => $form->createView(),
+            'formEdit' => $form->createView(),
         ]);
     }
 
