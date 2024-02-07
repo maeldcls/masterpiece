@@ -80,5 +80,23 @@
 			</div>
 		{% endfor %}
 	</div>
+
+    <div onclick="showModal(1)">
+        <p>EDIT</p>
+    </div>
+
+    <div id="modal" class="hidden cursor-pointer w-72 h-72 bg-sky-500">
+        <p id="modal-div">azdsfdsfdsffdsqgdsfgiuhfdsigyfdsiuygiufdhghdsgoiufdghoiuhdsfg</p>
+        <form action="{{ path('app_edit', {'gameUserId': 1}) }}" method="post">
+            {{ form_start(form[1]) }}
+            {{ form_widget(form[1]) }}
+            <button type="submit">Soumettre</button>
+        {{ form_end(forms[game.id]) }}
+    </form>
+        <p onclick="closeModal()">FERMER</p>
+    </div>
 {% endblock %}
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+           
+		<script src="{{ asset ('js/myGameList.js') }}"></script>  
+    {% endblock %}
