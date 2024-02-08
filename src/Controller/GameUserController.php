@@ -99,6 +99,21 @@ class GameUserController extends AbstractController
         return $this->redirectToRoute('app_game_user_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    
+    #[Route('/fav/{gameUserId}', name: 'app_fav')]
+    public function changeFav(EntityManagerInterface $entityManager, int $gameUserId)
+    {
+        $repository = $entityManager->getRepository(GameUser::class);
+        $gameUser = $repository->find($gameUserId);
+
+        if ($gameUser) {
+            $gameUser->toggleIsFav();
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_game_user_index');
+        } else {
+            // si entiy GameUser pas trouvé
+            return $this->redirectToRoute('app_game_user_index');
+        }
+    }
 
 }

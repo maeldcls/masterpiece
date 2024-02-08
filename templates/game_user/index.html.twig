@@ -18,7 +18,7 @@
 		{% for game in gameUser %}
 			<div class="flex justify-between ">
 				<div>
-					<img class="h-11" src="{{ game.game.backgroundImage }}" alt="{{ game.game.title }}">
+					<img class="h-24" src="{{ game.game.backgroundImage }}" alt="{{ game.game.title }}">
 				</div>
 				<div class="w-42">
 					<a href="{{ path('app_game_details', {'id': game.game.gameId}) }}">{{ game.game.title }}</a>
@@ -84,13 +84,6 @@
 		{% endfor %}
 	</div>
 
-    
-
-    <div id="modal" class="hidden cursor-pointer w-72 h-72 bg-sky-500">
-        <p id="modal-div">azdsfdsfdsffdsqgdsfgiuhfdsigyfdsiuygiufdhghdsgoiufdghoiuhdsfg</p>
-            
-        <p onclick="closeModal()">FERMER</p>
-    </div>
 {% endblock %}
 {% block javascripts %}
            

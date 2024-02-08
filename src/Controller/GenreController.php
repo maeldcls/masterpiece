@@ -13,6 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GenreController extends AbstractController
 {
+
+    #[Route('/genre', name: 'app_genre_selector')]
+    public function genreSelector(): Response
+    {
+        
+
+        return $this->render('genre/genre_selector.html.twig', [
+            'controller_name' => 'GameController',
+        ]);
+    }
+
     #[Route('/genre/{genre}', name: 'app_genre')]
     public function index($genre,ApiDataService $apiDataService): Response
     {
@@ -32,4 +43,6 @@ class GenreController extends AbstractController
             'games' => $apiData
         ]);
     }
+
+
 }

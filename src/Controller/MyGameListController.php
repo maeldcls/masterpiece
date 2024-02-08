@@ -41,29 +41,14 @@ class MyGameListController extends AbstractController
             $entityManager->remove($gameUser);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_my_game_list');
+            return $this->redirectToRoute('app_game_user_index');
         } else {
             // si entiy GameUser pas trouvé
-            return $this->redirectToRoute('app_my_game_list');
+            return $this->redirectToRoute('app_game_user_index');
         }
     }
 
-    #[Route('/fav/{gameUserId}', name: 'app_fav')]
-    public function changeFav(EntityManagerInterface $entityManager, int $gameUserId)
-    {
-        $repository = $entityManager->getRepository(GameUser::class);
-        $gameUser = $repository->find($gameUserId);
-
-        if ($gameUser) {
-            $gameUser->toggleIsFav();
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_my_game_list');
-        } else {
-            // si entiy GameUser pas trouvé
-            return $this->redirectToRoute('app_my_game_list');
-        }
-    }
+   
 
     #[Route('/edit/{gameUserId}', name: 'app_edit')]
 public function editGame(EntityManagerInterface $entityManager, Request $request, int $gameUserId)

@@ -16,15 +16,12 @@
 
     <body>
     <div>
-			{# {{ form_start(formSearch)}}
-			{{ form_widget(formSearch.searchText)}}
-			{{ form_end(formSearch)}} #}
 		</div>
     <div class="text-white bg-gray-900 m-0 flex flex-col w-52">
         <a href="{{ path('app_game') }}" class="font-bold p-2"><h4>Accueil</h4></a>
             {% if app.user %}
             <a href="{{ path('app_logout') }} " class="font-bold p-2"><h4>Log Out</h4></a>
-            <a href="{{ path('app_my_game_list') }}"><h4>MyGameList</h4></a>
+            <a href="{{ path('app_game_user_index') }}"><h4>MyGameList</h4></a>
         {% else %}
             <a href="{{ path('app_login') }}" class="font-bold p-2"><h4>Log In</h4></a>
         {% endif %}
@@ -36,7 +33,7 @@
         <a href=""><h4>Last 30 days</h4></a>
         <a href=""><h4>This week</h4></a>
         <a href=""><h4>Next Month</h4></a>
-        <h3 class="font-bold p-2">Genres</h3>
+        <a href="{{ path('app_genre_selector') }}"><h3 class="font-bold p-2">Genres</h3></a>
         <a href="{{ path('app_genre', {'genre': 'action'}) }}"><h4>Action</h4></a>
         <a href="{{ path('app_genre', {'genre': 'strategy'}) }}"><h4>Strategy</h4></a>
         <a href="{{ path('app_genre', {'genre': 'shooter'}) }}"><h4>Shooter</h4></a>

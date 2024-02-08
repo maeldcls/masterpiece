@@ -47,6 +47,8 @@ class GameController extends AbstractController
     #[Route('/new/{id}', name: 'app_add_game')]
     public function addGame(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
+        $url = $request->headers->get('referer');
+    
         if($this->getUser()){
             $manager =$entityManager->getRepository(Game::class);
 
@@ -111,6 +113,6 @@ class GameController extends AbstractController
            
         }
         
-         return $this->redirectToRoute('app_game');
+         return $this->redirect($url);
     }
 }

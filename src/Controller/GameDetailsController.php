@@ -40,7 +40,7 @@ class GameDetailsController extends AbstractController
         $game = new Game();
         $game->setTitle($data['name']);
        $game->setBackgroundImage($data['background_image']);
-
+         $game->setGameId($id);
        if (isset($data['publishers'])) {
         foreach ($data['publishers'] as $publisher) {
             $publi = new Publisher();
@@ -105,7 +105,6 @@ class GameDetailsController extends AbstractController
         }
 
         $game->setScreenshots($screenshots);
-
         return $this->render('game_details/index.html.twig', [
             'controller_name' => 'GameDetailsController',
             'game'=>$game,
