@@ -26,7 +26,7 @@ class MyGameListController extends AbstractController
 
         return $this->render('my_game_list/index.html.twig', [
             'controller_name' => 'MyGameListController',
-            'games' => $result,
+            'gameUser' => $result,
             'formEdit' => $form->createView(),
         ]);
     }

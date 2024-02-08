@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Game;
 use App\Entity\GameUser;
 use App\Form\GameUserType;
+use App\Repository\GameRepository;
 use App\Repository\GameUserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,9 +19,16 @@ class GameUserController extends AbstractController
     #[Route('/', name: 'app_game_user_index', methods: ['GET'])]
     public function index(GameUserRepository $gameUserRepository): Response
     {
+        /** @var \App\Entity\User $user */
+        $result = $gameUserRepository->showMyGames($this->getUser()->getId());
+
+
+        $form = $this->createForm(GameUserType::class);
 
         return $this->render('game_user/index.html.twig', [
-            'game_users' => $gameUserRepository->findAll(),
+            'controller_name' => 'GameUserController',
+            'gameUser' => $result,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -52,21 +61,30 @@ class GameUserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_game_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, GameUser $gameUser, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, GameUser $gameUser,GameRepository $gameRepository, GameUserRepository $gameUserRepository,EntityManagerInterface $entityManager,int $id): Response
     {
         $form = $this->createForm(GameUserType::class, $gameUser);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (!$gameUser) {
+            throw $this->createNotFoundException('GameUser not found');
+        }
+        $gameUser = $gameUserRepository->find($id);
+        $game = new Game();
+        $game = $gameRepository->find($gameUser->getGame()->getId());
+        
+        dump($game);
+        if ($form->isSubmitted()) {
             $gameUser->setComments($form->get('comments')->getData());
             $entityManager->persist($gameUser);
             $entityManager->flush();
-            
-            return $this->redirectToRoute('app_my_game_list', [], Response::HTTP_SEE_OTHER);
+            dump($gameUser);
+            return $this->redirectToRoute('app_game_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('game_user/edit.html.twig', [
             'game_user' => $gameUser,
             'form' => $form,
+            'game' => $game,
         ]);
     }
 
@@ -80,4 +98,7 @@ class GameUserController extends AbstractController
 
         return $this->redirectToRoute('app_game_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
+
 }
